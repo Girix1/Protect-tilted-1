@@ -1,12 +1,23 @@
 import { Enemy } from "./ui/entities.js";
 import { Background } from "./ui/basic-ui.js";
+import { Twins } from "./ui/twins.js";
 
 const background = new Background();
+const twins = new Twins(100, 495, 50, 245, 610);
+const canvas = document.getElementById("canvas")
+const ctx = canvas.getContext("2d");
+
+document.addEventListener("click", (e) => {
+console.log(e.clientX);
+console.log(e.clientY);
+const canvasPos = canvas.getBoundingClientRect();
+console.log(canvasPos.left);
+console.log(canvasPos.top);
+})
 
 const enemies = [];
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+
 
 const gameLoop = () => {
   //clear
@@ -30,9 +41,11 @@ const clear = () => {
 const update = () => {
   enemies.map((a) => {
     a.update();
+    twins.detectCollision(a)
   });
 };
 const render = () => {
+  twins.draw(ctx);
   enemies.map((a) => {
     a.draw(ctx);
   })
